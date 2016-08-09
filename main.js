@@ -1,5 +1,5 @@
 /* main.js
- * 
+ *
  * Snake
  * (c) 2015 by Luís Silva
  * */
@@ -33,23 +33,39 @@ function drawFrame(){
 	snake.draw();
 }
 
+function onLeft(){
+	snake.turnLeft();
+}
+
+function onUp(){
+	snake.turnUp();
+}
+
+function onRight(){
+	snake.turnRight();
+}
+
+function onDown(){
+	snake.turnDown();
+}
+
 function OnKeyDown(ev){
 	switch(ev.keyCode){
 		case KEY_LEFT:
 		case KEY_A:
-			snake.setAngle(Math.PI);
+			onLeft();
 			break;
 		case KEY_UP:
 		case KEY_W:
-			snake.setAngle(-Math.PI/2);
+			onUp();
 			break;
 		case KEY_RIGHT:
 		case KEY_D:
-			snake.setAngle(0);
+			onRight();
 			break;
 		case KEY_DOWN:
 		case KEY_S:
-			snake.setAngle(Math.PI/2);
+			onDown();
 			break;
 		default:
 			break;

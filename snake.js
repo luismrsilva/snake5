@@ -1,9 +1,9 @@
 /* snake.js
- * 
+ *
  * Snake
  * (c) 2015 by Luís Silva
  * */
- 
+
 function Snake(ctx, headFillStyle, fillStyle){
 	this.ctx = ctx;
 	this.headFillStyle = headFillStyle;
@@ -17,7 +17,7 @@ function Snake(ctx, headFillStyle, fillStyle){
 	this.maxX = 16;
 	this.maxY = 16;
 	this.angle = 0;
-	
+
 	this.head.setPos(gameCoordsToScreen(this.x, this.y));
 }
 
@@ -48,7 +48,7 @@ Snake.prototype.move = function(){
 		var pos = this.tail[i-1].getPos();
 		this.tail[i].setPos(pos);
 	}
-	
+
 	this.head.setPos(gameCoordsToScreen(this.x, this.y));
 }
 
@@ -65,4 +65,20 @@ Snake.prototype.grow = function(){
 	var pos = this.tail[this.tail.length-1].getPos();
 	tile.setPos(pos);
 	this.tail.push(tile);
+}
+
+Snake.prototype.turnLeft = function(){
+	this.setAngle(Math.PI);
+}
+
+Snake.prototype.turnUp = function(){
+	this.setAngle(-Math.PI/2);
+}
+
+Snake.prototype.turnRight = function(){
+	this.setAngle(0);
+}
+
+Snake.prototype.turnDown = function(){
+	this.setAngle(Math.PI/2);
 }
