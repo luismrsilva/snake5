@@ -100,3 +100,10 @@ drawFrame();
 updateStuff();
 
 document.onkeydown = OnKeyDown;
+
+var swipeHandler = new SwipeHander(c);
+
+swipeHandler.setOnRight(onRight);
+swipeHandler.setOnUp(onUp);
+swipeHandler.setOnLeft(onLeft);
+swipeHandler.setOnDown(onDown);
