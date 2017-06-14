@@ -24,13 +24,13 @@ function gameCoordsToScreen(x, y){
 
 var ctx = c.getContext("2d");
 
-var snake = new Snake(ctx, "#76FF03", "#64DD17");
-var cake = new Cake(ctx, "#FFFF00");
+var snake = new Snake("#76FF03", "#64DD17");
+var cake = new Cake("#FFFF00");
 
 function drawFrame(){
 	ctx.clearRect(0, 0, c.width, c.height);
-	cake.draw();
-	snake.draw();
+	cake.draw(ctx);
+	snake.draw(ctx);
 }
 
 function onLeft(){

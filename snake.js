@@ -4,12 +4,11 @@
  * (c) 2015 by Luís Silva
  * */
 
-function Snake(ctx, headFillStyle, fillStyle){
-	this.ctx = ctx;
+function Snake(headFillStyle, fillStyle){
 	this.headFillStyle = headFillStyle;
 	this.fillStyle = fillStyle;
 	this.tail = new Array();
-	this.head = new Tile(ctx, headFillStyle);
+	this.head = new Tile(headFillStyle);
 	this.tail.push(this.head);
 
 	this.x = 0;
@@ -33,9 +32,9 @@ Snake.prototype.setMaxPos = function(maxX, maxY){
 	this.head.setPos(gameCoordsToScreen(this.x, this.y));
 }
 
-Snake.prototype.draw = function(){
+Snake.prototype.draw = function(ctx){
 	for(var i = this.tail.length-1; i>=0; i--){
-		this.tail[i].draw();
+		this.tail[i].draw(ctx);
 	}
 }
 
@@ -61,7 +60,7 @@ Snake.prototype.setAngle = function(angle){
 }
 
 Snake.prototype.grow = function(){
-	var tile = new Tile(this.ctx, this.fillStyle);
+	var tile = new Tile(this.fillStyle);
 	var pos = this.tail[this.tail.length-1].getPos();
 	tile.setPos(pos);
 	this.tail.push(tile);
