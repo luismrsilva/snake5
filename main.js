@@ -12,12 +12,17 @@ var KEY_DOWN	= 40;	var KEY_S = 83;
 var tileWidth = 50;
 
 var c = document.getElementById("myCanvas");
-var maxX = 0;
-var maxY = 0;
+
+var arenaTop = 0;
+var arenaBottom = 0;
+var arenaLeft = 0;
+var arenaRight = 0;
+
+var arenaFillStyle = "#4CAF50";
 
 function gameCoordsToScreen(x, y){
-	return {x: x*tileWidth,
-			y: y*tileWidth,
+	return {x: arenaLeft + x*tileWidth,
+			y: arenaTop + y*tileWidth,
 			w: tileWidth,
 			h: tileWidth};
 }
@@ -29,6 +34,8 @@ var cake = new Cake("#FFFF00");
 
 function drawFrame(){
 	ctx.clearRect(0, 0, c.width, c.height);
+	ctx.fillStyle = arenaFillStyle;
+	ctx.fillRect(arenaLeft, arenaTop, arenaRight, arenaBottom);
 	cake.draw(ctx);
 	snake.draw(ctx);
 }
@@ -76,10 +83,19 @@ function OnKeyDown(ev){
 function computeSizes(){
 	c.width = document.documentElement.clientWidth || 0;
 	c.height = document.documentElement.clientHeight || 0;
-	maxX = Math.floor(c.width/tileWidth);
-	maxY = Math.floor(c.height/tileWidth);
+	var maxX = Math.floor(c.width/tileWidth);
+	var maxY = Math.floor(c.height/tileWidth);
 	snake.setMaxPos(maxX, maxY);
 	cake.setMaxPos(maxX, maxY);
+
+	var marginX = (c.width - maxX * tileWidth)/2;
+	var marginY = (c.height - maxY * tileWidth)/2;
+
+	arenaLeft = marginX;
+	arenaTop = marginY;
+	arenaRight = maxX*tileWidth;
+	arenaBottom = maxY*tileWidth;
+	cake.updatePos();
 }
 
 function updateStuff(){
