@@ -1,0 +1,13 @@
+{
+	"short_name":	"Snake5",
+	"name":			"Snake5",
+	"icons": [
+		{
+			"src": "favicon.png"
+		}
+	],
+	"display": "standalone",
+	"start_url": "https://luismrsilva.github.io/snake5/",
+	"theme_color": "#367c39",
+	"background_color": "#367c39"
+}
