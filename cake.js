@@ -18,7 +18,7 @@ Cake.prototype.setMaxPos = function(maxX, maxY){
 	this.maxY = maxY;
 	this.x = (this.x+maxX)%maxX;
 	this.y = (this.y+maxY)%maxY;
-	this.tile.setPos(gameCoordsToScreen(this.x, this.y));
+	this.updatePos();
 }
 
 Cake.prototype.draw = function(ctx){
@@ -32,7 +32,7 @@ Cake.prototype.respawn = function(maxX, maxY){
 }
 
 Cake.prototype.updatePos = function(){
-	if(this.x && this.y){
+	if(this.x != undefined && this.y != undefined){
 		this.tile.setPos(gameCoordsToScreen(this.x, this.y));
 	}
 }

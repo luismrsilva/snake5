@@ -32,6 +32,11 @@ var ctx = c.getContext("2d");
 var snake = new Snake("#76FF03", "#64DD17");
 var cake = new Cake("#FFFF00");
 
+var sizeChanged = true;
+function onResize(){
+	sizeChanged = true;
+}
+
 function drawFrame(){
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.fillStyle = arenaFillStyle;
@@ -85,8 +90,6 @@ function computeSizes(){
 	c.height = document.documentElement.clientHeight || 0;
 	var maxX = Math.floor(c.width/tileWidth);
 	var maxY = Math.floor(c.height/tileWidth);
-	snake.setMaxPos(maxX, maxY);
-	cake.setMaxPos(maxX, maxY);
 
 	var marginX = (c.width - maxX * tileWidth)/2;
 	var marginY = (c.height - maxY * tileWidth)/2;
@@ -95,10 +98,16 @@ function computeSizes(){
 	arenaTop = marginY;
 	arenaRight = maxX*tileWidth;
 	arenaBottom = maxY*tileWidth;
-	cake.updatePos();
+
+	snake.setMaxPos(maxX, maxY);
+	cake.setMaxPos(maxX, maxY);
 }
 
 function updateStuff(){
+	if(sizeChanged == true){
+		computeSizes();
+		sizeChanged = false;
+	}
 	snake.move();
 	drawFrame();
 	if(snake.x == cake.x && snake.y == cake.y){
@@ -108,8 +117,7 @@ function updateStuff(){
 	setTimeout(updateStuff, 10+100/Math.log10(snake.getSize()/2+3));
 }
 
-
-document.body.onresize = computeSizes;
+document.body.onresize = onResize;
 computeSizes();
 cake.respawn();
 drawFrame();
