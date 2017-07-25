@@ -9,7 +9,8 @@ var KEY_UP		= 38;	var KEY_W = 87;
 var KEY_RIGHT	= 39;	var KEY_D = 68;
 var KEY_DOWN	= 40;	var KEY_S = 83;
 
-var tileWidth = 50;
+var sideTileCount = 24;
+var tileWidth;
 
 var c = document.getElementById("myCanvas");
 
@@ -88,6 +89,8 @@ function OnKeyDown(ev){
 function computeSizes(){
 	c.width = document.documentElement.clientWidth || 0;
 	c.height = document.documentElement.clientHeight || 0;
+
+	tileWidth = Math.max(c.width, c.height)/sideTileCount;
 	var maxX = Math.floor(c.width/tileWidth);
 	var maxY = Math.floor(c.height/tileWidth);
 
