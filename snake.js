@@ -54,6 +54,10 @@ Snake.prototype.shouldDie = function(){
 	return false;
 }
 
+Snake.prototype.isDead = function(){
+	return this.dead;
+}
+
 Snake.prototype.die = function(){
 	this.dead = true;
 	this.headFillStyle = "#7cc144";

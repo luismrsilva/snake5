@@ -8,11 +8,16 @@ var KEY_LEFT	= 37;	var KEY_A = 65;
 var KEY_UP		= 38;	var KEY_W = 87;
 var KEY_RIGHT	= 39;	var KEY_D = 68;
 var KEY_DOWN	= 40;	var KEY_S = 83;
+var KEY_SPACE	= 32;
+var KEY_RETURN	= 13;
 
 var sideTileCount = 24;
 var tileWidth;
 
+/* Elements */
 var c = document.getElementById("myCanvas");
+var gameOverOverlay = document.getElementById("gameOverOverlay");
+var restartButton = document.getElementById("restartButton");
 
 var arenaTop = 0;
 var arenaBottom = 0;
@@ -38,12 +43,17 @@ function initGame(){
 
 	snake.setOnDieCallback(function(){
 		arenaFillStyle = "#AF4C50";
+		gameOverOverlay.style.display = "";
 	});
 
 	computeSizes();
 	cake.respawn();
 	drawFrame();
+
+	gameOverOverlay.style.display = "none";
 }
+
+restartButton.onclick = initGame;
 
 
 var sizeChanged = true;
@@ -75,6 +85,12 @@ function onDown(){
 	snake.turnDown();
 }
 
+function tryRestart(){
+	if(snake.isDead()){
+		initGame();
+	}
+}
+
 function OnKeyDown(ev){
 	switch(ev.keyCode){
 		case KEY_LEFT:
@@ -92,6 +108,10 @@ function OnKeyDown(ev){
 		case KEY_DOWN:
 		case KEY_S:
 			onDown();
+			break;
+		case KEY_SPACE:
+		case KEY_RETURN:
+			tryRestart();
 			break;
 		default:
 			break;
