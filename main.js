@@ -19,7 +19,7 @@ var arenaBottom = 0;
 var arenaLeft = 0;
 var arenaRight = 0;
 
-var arenaFillStyle = "#4CAF50";
+var arenaFillStyle;
 
 function gameCoordsToScreen(x, y){
 	return {x: arenaLeft + x*tileWidth,
@@ -29,14 +29,27 @@ function gameCoordsToScreen(x, y){
 }
 
 var ctx = c.getContext("2d");
+var snake, cake;
 
-var snake = new Snake("#76FF03", "#64DD17");
-var cake = new Cake("#FFFF00");
+function initGame(){
+	arenaFillStyle = "#4CAF50";
+	snake = new Snake("#76FF03", "#64DD17");
+	cake = new Cake("#FFFF00");
+
+	snake.setOnDieCallback(function(){
+		arenaFillStyle = "#AF4C50";
+	});
+
+	computeSizes();
+	cake.respawn();
+	drawFrame();
+}
+
 
 var sizeChanged = true;
-function onResize(){
+document.body.onresize = function (){
 	sizeChanged = true;
-}
+};
 
 function drawFrame(){
 	ctx.clearRect(0, 0, c.width, c.height);
@@ -120,10 +133,7 @@ function updateStuff(){
 	setTimeout(updateStuff, 10+100/Math.log10(snake.getSize()/2+3));
 }
 
-document.body.onresize = onResize;
-computeSizes();
-cake.respawn();
-drawFrame();
+initGame();
 updateStuff();
 
 document.onkeydown = OnKeyDown;

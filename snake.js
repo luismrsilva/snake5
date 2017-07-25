@@ -16,6 +16,10 @@ function Snake(headFillStyle, fillStyle){
 	this.maxX = 16;
 	this.maxY = 16;
 	this.angle = 0;
+	this.lastAngle = 0;
+
+	this.dead = false;
+	this.onDieCallback = undefined;
 
 	this.head.setPos(gameCoordsToScreen(this.x, this.y));
 }
@@ -38,7 +42,37 @@ Snake.prototype.draw = function(ctx){
 	}
 }
 
+Snake.prototype.shouldDie = function(){
+	var len = this.tail.length;
+	for(var i = 0; i < len; i++){
+		for(var j = i+4; j < len; j++){
+			if(this.tail[i].atSamePos(this.tail[j])){
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+Snake.prototype.die = function(){
+	this.dead = true;
+	this.headFillStyle = "#7cc144";
+	this.fillStyle = "#72a054";
+
+	this.tail[0].setFillStyle(this.headFillStyle);
+	for(var i = this.tail.length-1; i > 0; i--){
+		this.tail[i].setFillStyle(this.fillStyle);
+	}
+
+	if(this.onDieCallback){
+		this.onDieCallback();
+	}
+}
+
 Snake.prototype.move = function(){
+	if(this.dead){
+		return;
+	}
 
 	this.x = (this.maxX+this.x+Math.cos(this.angle))%this.maxX;
 	this.y = (this.maxY+this.y+Math.sin(this.angle))%this.maxY;
@@ -49,10 +83,20 @@ Snake.prototype.move = function(){
 	}
 
 	this.head.setPos(gameCoordsToScreen(this.x, this.y));
+
+	this.lastAngle = this.angle;
+
+	if(this.shouldDie()){
+		this.die();
+	}
 }
 
 Snake.prototype.setAngle = function(angle){
 	var prev = this.angle;
+	if(Math.abs(angle - this.lastAngle) == Math.PI){
+		return;
+	}
+
 	this.angle = angle;
 	if(prev == angle){
 		this.move();
@@ -80,4 +124,8 @@ Snake.prototype.turnRight = function(){
 
 Snake.prototype.turnDown = function(){
 	this.setAngle(Math.PI/2);
+}
+
+Snake.prototype.setOnDieCallback = function(callback){
+	this.onDieCallback = callback;
 }

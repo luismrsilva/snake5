@@ -20,10 +20,19 @@ Tile.prototype.draw = function(ctx){
 
 Tile.prototype.getPos = function(){
 	return {x:this.x, y:this.y, w:this.w, h:this.h};
-}
+};
+
 Tile.prototype.setPos = function(o){
 	this.x = o.x;
 	this.y = o.y;
 	this.w = o.w;
 	this.h = o.h;
-}
+};
+
+Tile.prototype.atSamePos = function(tile){
+	return this.x == tile.x && this.y == tile.y;
+};
+
+Tile.prototype.setFillStyle = function(fillStyle){
+	this.fillStyle = fillStyle;
+};
