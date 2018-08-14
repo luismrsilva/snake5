@@ -25,14 +25,24 @@ Cake.prototype.draw = function(ctx){
 	this.tile.draw(ctx);
 };
 
-Cake.prototype.respawn = function(maxX, maxY){
-	this.x = randIntMax(this.maxX);
-	this.y = randIntMax(this.maxY);
+Cake.prototype.respawn = function(snake){
+	var tries = 0;
+	var maxTries = this.maxX * this.maxY; // very unlikely, depending on snake/screen ratio.
+	var x = y = 0;
+
+	do {
+		x = randIntMax(this.maxX);
+		y = randIntMax(this.maxY);
+		tries++;
+	} while(snake.isTakingPos(x, y) && tries < maxTries);
+	
+	this.x = x;
+	this.y = y;
 	this.updatePos();
 }
 
 Cake.prototype.updatePos = function(){
 	if(this.x != undefined && this.y != undefined){
-		this.tile.setPos(gameCoordsToScreen(this.x, this.y));
+		this.tile.setPos(this.x, this.y);
 	}
 }

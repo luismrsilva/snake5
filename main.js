@@ -27,8 +27,8 @@ var arenaRight = 0;
 var arenaFillStyle;
 
 function gameCoordsToScreen(x, y){
-	return {x: arenaLeft + x*tileWidth,
-			y: arenaTop + y*tileWidth,
+	return {xScreen: arenaLeft + x*tileWidth,
+			yScreen: arenaTop + y*tileWidth,
 			w: tileWidth,
 			h: tileWidth};
 }
@@ -47,7 +47,7 @@ function initGame(){
 	});
 
 	computeSizes();
-	cake.respawn();
+	cake.respawn(snake);
 	drawFrame();
 
 	gameOverOverlay.style.display = "none";
@@ -148,7 +148,7 @@ function updateStuff(){
 	drawFrame();
 	if(snake.x == cake.x && snake.y == cake.y){
 		snake.grow();
-		cake.respawn();
+		cake.respawn(snake);
 	}
 	setTimeout(updateStuff, 10+100/Math.log10(snake.getSize()/2+3));
 }

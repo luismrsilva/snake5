@@ -21,7 +21,7 @@ function Snake(headFillStyle, fillStyle){
 	this.dead = false;
 	this.onDieCallback = undefined;
 
-	this.head.setPos(gameCoordsToScreen(this.x, this.y));
+	this.head.setPos(this.x, this.y);
 }
 
 Snake.prototype.getSize = function(){
@@ -33,7 +33,7 @@ Snake.prototype.setMaxPos = function(maxX, maxY){
 	this.maxY = maxY;
 	this.x = (this.x+maxX)%maxX;
 	this.y = (this.y+maxY)%maxY;
-	this.head.setPos(gameCoordsToScreen(this.x, this.y));
+	this.head.setPos(this.x, this.y);
 }
 
 Snake.prototype.draw = function(ctx){
@@ -82,11 +82,10 @@ Snake.prototype.move = function(){
 	this.y = (this.maxY+this.y+Math.sin(this.angle))%this.maxY;
 
 	for(var i = this.tail.length-1; i > 0; i--){
-		var pos = this.tail[i-1].getPos();
-		this.tail[i].setPos(pos);
+		this.tail[i].copyPos(this.tail[i-1]);
 	}
 
-	this.head.setPos(gameCoordsToScreen(this.x, this.y));
+	this.head.setPos(this.x, this.y);
 
 	this.lastAngle = this.angle;
 
@@ -109,8 +108,7 @@ Snake.prototype.setAngle = function(angle){
 
 Snake.prototype.grow = function(){
 	var tile = new Tile(this.fillStyle);
-	var pos = this.tail[this.tail.length-1].getPos();
-	tile.setPos(pos);
+	tile.copyPos(this.tail[this.tail.length-1]);
 	this.tail.push(tile);
 }
 
@@ -132,4 +130,13 @@ Snake.prototype.turnDown = function(){
 
 Snake.prototype.setOnDieCallback = function(callback){
 	this.onDieCallback = callback;
+}
+
+Snake.prototype.isTakingPos = function(x, y){
+	for(var i = this.tail.length-1; i >= 0; i--){
+		if(this.tail[i].isAtXY(x, y)){
+			return true;
+		}
+	}
+	return false;
 }
