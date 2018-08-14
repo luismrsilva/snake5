@@ -42,18 +42,6 @@ Snake.prototype.draw = function(ctx){
 	}
 }
 
-Snake.prototype.shouldDie = function(){
-	var len = this.tail.length;
-	for(var i = 0; i < len; i++){
-		for(var j = i+4; j < len; j++){
-			if(this.tail[i].atSamePos(this.tail[j])){
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 Snake.prototype.isDead = function(){
 	return this.dead;
 }
@@ -77,9 +65,19 @@ Snake.prototype.move = function(){
 	if(this.dead){
 		return;
 	}
+	
+	var newX = (this.maxX+this.x+Math.cos(this.angle))%this.maxX;
+	var newY = (this.maxY+this.y+Math.sin(this.angle))%this.maxY;
 
-	this.x = (this.maxX+this.x+Math.cos(this.angle))%this.maxX;
-	this.y = (this.maxY+this.y+Math.sin(this.angle))%this.maxY;
+	/* check if the new postion for the head is taken by the snake,
+		except for the last tile on the tail, which is going to move */
+	if(this.isTakingPos(newX, newY, 1)){
+		this.die();
+		return;
+	}
+	
+	this.x = newX;
+	this.y = newY;
 
 	for(var i = this.tail.length-1; i > 0; i--){
 		this.tail[i].copyPos(this.tail[i-1]);
@@ -88,10 +86,6 @@ Snake.prototype.move = function(){
 	this.head.setPos(this.x, this.y);
 
 	this.lastAngle = this.angle;
-
-	if(this.shouldDie()){
-		this.die();
-	}
 }
 
 Snake.prototype.setAngle = function(angle){
@@ -132,8 +126,12 @@ Snake.prototype.setOnDieCallback = function(callback){
 	this.onDieCallback = callback;
 }
 
-Snake.prototype.isTakingPos = function(x, y){
-	for(var i = this.tail.length-1; i >= 0; i--){
+/*
+	exclude:	Number of tiles to exclude from check, starting from the tail.
+				Can be 0 (check the whole snake) to tail.length-1 (only check the head)
+*/
+Snake.prototype.isTakingPos = function(x, y, exclude=0){
+	for(var i = this.tail.length - 1 - (exclude % (this.tail.length)); i >= 0; i--){
 		if(this.tail[i].isAtXY(x, y)){
 			return true;
 		}
