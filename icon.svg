@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="800" height="800" version="1.1" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<title>Snake5</title>
+	<g>
+		<rect id="background" width="800" height="800" fill="#367c39" style="paint-order:markers fill stroke"/>
+		<rect id="arena" x="50" y="50" width="700" height="700" fill="#4caf50" style="paint-order:markers fill stroke"/>
+		<rect id="cake" x="550" y="150" width="100" height="100" fill="#ff0" style="paint-order:markers fill stroke"/>
+		<path d="m150 150v300h200v100h-200v100h300v-300h-200v-100h200v-100h-200z" fill="#64dd17" style="paint-order:markers fill stroke"/>
+		<rect id="head" x="350" y="150" width="100" height="100" fill="#76ff03" style="paint-order:markers fill stroke"/>
+	</g>
+	<metadata>
+		<rdf:RDF>
+			<cc:Work rdf:about="">
+				<dc:title>Snake5</dc:title>
+			</cc:Work>
+		</rdf:RDF>
+	</metadata>
+</svg>

@@ -3,7 +3,14 @@
 	"name":			"Snake5",
 	"icons": [
 		{
-			"src": "favicon.png"
+			"src": "favicon.png",
+			"type": "image/png",
+			"sizes": "256x256"
+		},
+		{
+			"src": "icon.svg",
+			"type": "image/svg+xml",
+			"sizes": "any"
 		}
 	],
 	"display": "standalone",
