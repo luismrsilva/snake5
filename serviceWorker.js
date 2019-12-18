@@ -1,7 +1,7 @@
 var CACHE_NAME = 'snake5-v0.1';
 var urlsToCache = [
-	'/',
-	'/index.html',
+	'./',
+	'index.html',
 	'cake.js',
 	'favicon.png',
 	'icon.svg',
@@ -28,15 +28,15 @@ self.addEventListener("fetch", function(event){
 	event.respondWith(
 		caches.match(event.request)
 			.then(function(response){
-				
+
 				// cache hit
 				if(response){
 					console.log("cached response: ", response);
 					return response;
 				}
-				
+
 				var fetchRequest = event.request.clone();
-				
+
 				return fetch(fetchRequest).then(function(response){
 					if(response && response.status == 200 && response.type == "basic"){
 						var toCache = response.clone();
