@@ -18,6 +18,7 @@ function Snake(headFillStyle, fillStyle){
 	this.angle = 0;
 	this.lastAngle = 0;
 
+	this.goFaster = false;
 	this.dead = false;
 	this.onDieCallback = undefined;
 
@@ -65,7 +66,7 @@ Snake.prototype.move = function(){
 	if(this.dead){
 		return;
 	}
-	
+
 	var newX = (this.maxX+this.x+Math.cos(this.angle))%this.maxX;
 	var newY = (this.maxY+this.y+Math.sin(this.angle))%this.maxY;
 
@@ -75,7 +76,7 @@ Snake.prototype.move = function(){
 		this.die();
 		return;
 	}
-	
+
 	this.x = newX;
 	this.y = newY;
 
@@ -96,8 +97,16 @@ Snake.prototype.setAngle = function(angle){
 
 	this.angle = angle;
 	if(prev == angle){
-		this.move();
+		this.goFaster = true;
 	}
+}
+
+Snake.prototype.setFaster = function(faster){
+	this.goFaster = faster;
+}
+
+Snake.prototype.getInterval = function(){
+	return 10+100/Math.log10(snake.getSize()/2+3);
 }
 
 Snake.prototype.grow = function(){

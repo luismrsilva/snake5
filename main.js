@@ -139,22 +139,40 @@ function computeSizes(){
 	cake.setMaxPos(maxX, maxY);
 }
 
-function updateStuff(){
+var deltaMsSum = 0;
+function updateStuff(deltaMs){
 	if(sizeChanged == true){
-		computeSizes();
 		sizeChanged = false;
+		computeSizes();
 	}
+
+	/* only draw every interval ms or if key was pressed (to move faster) */
+	let interval = snake.getInterval();
+	deltaMsSum += deltaMs;
+	if(!snake.goFaster && deltaMsSum < interval){
+		return;
+	}
+	deltaMsSum = 0;
+	snake.goFaster = false;
+
 	snake.move();
 	drawFrame();
 	if(snake.x == cake.x && snake.y == cake.y){
 		snake.grow();
 		cake.respawn(snake);
 	}
-	setTimeout(updateStuff, 10+100/Math.log10(snake.getSize()/2+3));
+}
+
+var lastNow = performance.now();
+function animate(now){
+	let deltaMs = now - lastNow;
+	lastNow = now;
+	updateStuff(deltaMs, now);
+	requestAnimationFrame(animate);
 }
 
 initGame();
-updateStuff();
+requestAnimationFrame(animate);
 
 document.onkeydown = OnKeyDown;
 
