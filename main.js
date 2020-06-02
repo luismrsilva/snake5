@@ -26,13 +26,6 @@ var arenaRight = 0;
 
 var arenaFillStyle;
 
-function gameCoordsToScreen(x, y){
-	return {xScreen: arenaLeft + x*tileWidth,
-			yScreen: arenaTop + y*tileWidth,
-			w: tileWidth,
-			h: tileWidth};
-}
-
 var ctx = c.getContext("2d");
 var snake, cake;
 
@@ -63,8 +56,16 @@ document.body.onresize = function (){
 
 function drawFrame(){
 	ctx.clearRect(0, 0, c.width, c.height);
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+	// fill arena (screen coordinates)
 	ctx.fillStyle = arenaFillStyle;
 	ctx.fillRect(arenaLeft, arenaTop, arenaRight, arenaBottom);
+
+	// transform to world coordinates
+	ctx.translate(arenaLeft, arenaTop);
+	ctx.scale(tileWidth, tileWidth);
+
 	cake.draw(ctx);
 	snake.draw(ctx);
 }
