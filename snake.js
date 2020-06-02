@@ -112,7 +112,7 @@ Snake.prototype.setFaster = function(faster){
 }
 
 Snake.prototype.getInterval = function(){
-	return 10+100/Math.log10(snake.getSize()/2+3);
+	return 10+100/Math.log10(snake.getSize()/2+2);
 }
 
 Snake.prototype.grow = function(){
