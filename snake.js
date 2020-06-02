@@ -4,6 +4,8 @@
  * (c) 2015 by Luís Silva
  * */
 
+const INITIAL_SNAKE_LEN	= 2;
+
 function Snake(headFillStyle, fillStyle){
 	this.headFillStyle = headFillStyle;
 	this.fillStyle = fillStyle;
@@ -23,6 +25,10 @@ function Snake(headFillStyle, fillStyle){
 	this.onDieCallback = undefined;
 
 	this.head.setPos(this.x, this.y);
+
+	for(let i = 0; i < INITIAL_SNAKE_LEN; i++){
+		this.grow();
+	}
 }
 
 Snake.prototype.getSize = function(){
