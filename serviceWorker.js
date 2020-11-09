@@ -1,4 +1,4 @@
-var CACHE_NAME = 'snake5-v0.1';
+var CACHE_NAME = 'snake5-v0.1.1';
 var urlsToCache = [
 	'./',
 	'index.html',
@@ -12,12 +12,27 @@ var urlsToCache = [
 	'tile.js'
 ];
 
+
+function deleteExisting(){
+	// Delete existing caches, except for (current) CACHE_NAME
+	self.caches.keys().then(keys => {
+		keys.forEach(key => {
+			console.log(key);
+			if(key != CACHE_NAME){
+				console.log("Delete existing cache", key);
+				caches.delete(key);
+			}
+		}
+	)});
+}
+
 self.addEventListener("install", function(event) {
 	// Perform install steps
 	event.waitUntil(
 		caches.open(CACHE_NAME)
 			.then(function(cache) {
 				console.log('Opened cache ', CACHE_NAME);
+				deleteExisting();
 				return cache.addAll(urlsToCache);
 			})
 	);
@@ -31,7 +46,7 @@ self.addEventListener("fetch", function(event){
 
 				// cache hit
 				if(response){
-					console.log("cached response: ", response);
+					console.log("Cached response: ", response);
 					return response;
 				}
 
