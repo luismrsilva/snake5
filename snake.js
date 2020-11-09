@@ -38,6 +38,10 @@ Snake.prototype.getSize = function(){
 Snake.prototype.setMaxPos = function(maxX, maxY){
 	this.maxX = maxX;
 	this.maxY = maxY;
+
+	if(this.dead){
+		return;
+	}
 	this.x = (this.x+maxX)%maxX;
 	this.y = (this.y+maxY)%maxY;
 	this.head.setPos(this.x, this.y);

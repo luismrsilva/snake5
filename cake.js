@@ -16,6 +16,10 @@ function Cake(fillStyle){
 Cake.prototype.setMaxPos = function(maxX, maxY){
 	this.maxX = maxX;
 	this.maxY = maxY;
+
+	if(snake.dead){
+		return;
+	}
 	this.x = (this.x+maxX)%maxX;
 	this.y = (this.y+maxY)%maxY;
 	this.updatePos();
@@ -35,7 +39,7 @@ Cake.prototype.respawn = function(snake){
 		y = randIntMax(this.maxY);
 		tries++;
 	} while(snake.isTakingPos(x, y) && tries < maxTries);
-	
+
 	this.x = x;
 	this.y = y;
 	this.updatePos();
