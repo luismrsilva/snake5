@@ -16,8 +16,11 @@ function SwipeHander(element){
 	this.startY = null;
 
 	var that = this;
-	element.ontouchstart = function(e){that.onTouchStart(e)};
-	element.ontouchend = function(e){that.onTouchEnd(e)};
+	let options = {
+		passive: false
+	};
+	element.addEventListener("touchstart", (e) => {that.onTouchStart(e)}, options);
+	element.addEventListener("touchend", (e) => {that.onTouchEnd(e)}, options);
 }
 
 SwipeHander.prototype.onRight = function(){};
