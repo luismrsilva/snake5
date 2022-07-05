@@ -164,10 +164,18 @@ function updateStuff(deltaMs){
 	}
 }
 
+var myGamepadHandler = new MyGamepadHandler();
+myGamepadHandler.setOnRight(onRight);
+myGamepadHandler.setOnUp(onUp);
+myGamepadHandler.setOnLeft(onLeft);
+myGamepadHandler.setOnDown(onDown);
+myGamepadHandler.setOnTryRestart(tryRestart);
+
 var lastNow = performance.now();
 function animate(now){
 	let deltaMs = now - lastNow;
 	lastNow = now;
+	myGamepadHandler.handleGamePads();
 	updateStuff(deltaMs, now);
 	requestAnimationFrame(animate);
 }

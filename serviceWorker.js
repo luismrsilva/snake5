@@ -1,4 +1,4 @@
-var CACHE_NAME = 'snake5-v0.1.1';
+var CACHE_NAME = 'snake5-v0.2.0';
 var urlsToCache = [
 	'./',
 	'index.html',
@@ -9,6 +9,7 @@ var urlsToCache = [
 	'myLib.js',
 	'snake.js',
 	'swipe.js',
+	'MyGamepadHandler.js',
 	'tile.js'
 ];
 
