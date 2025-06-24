@@ -53,8 +53,7 @@ SwipeHander.prototype.onTouchStart = function(e){
 
 SwipeHander.prototype.onTouchEnd = function(e){
 	var touch = e.changedTouches[0];
-	var dir = this.handleSimpleTouch(this.startX, this.startY, touch.clientX, touch.clientY);
-	console.log(dir);
+	this.handleSimpleTouch(this.startX, this.startY, touch.clientX, touch.clientY);
 	e.preventDefault();
 }
 
